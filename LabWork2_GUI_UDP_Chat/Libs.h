@@ -8,6 +8,8 @@
 #include <QValidator>
 #include <QLabel>
 #include <QLineEdit>
+#include <QTextEdit>
+#include <QListWidget>
 #include <QFrame>
 #include <QPushButton>
 #include <QProgressBar>

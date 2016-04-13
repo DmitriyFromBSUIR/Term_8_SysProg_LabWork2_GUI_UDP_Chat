@@ -34,18 +34,57 @@ MainWindow::MainWindow(QWidget *parent) :
     //
     QLabel* lblGroupIP = new QLabel("Multicast IP (Group: All-Hosts) : ");
     CustomIpEditor* myIpEdGroupIP = new CustomIpEditor;
-    QLabel* lblGroupPort = new QLabel("Multicast Port (Group: All-Hosts) : ");
+    QLabel* lblGroupPort = new QLabel("             Multicast Port (Group: All-Hosts) : ");
     PortValidatorWidget* grpPort = new PortValidatorWidget;
     //
     QLabel* lblThisHostUserIP = new QLabel("My IP : ");
     CustomIpEditor* myIpEdThisHostUserIP = new CustomIpEditor;
-    QLabel* lblThisHostUserPort = new QLabel("My Port : ");
+    QLabel* lblThisHostUserPort = new QLabel("              My Port : ");
     PortValidatorWidget* thisUserPort = new PortValidatorWidget;
+    //
+    QLabel* lblThisUserNickname = new QLabel("My Nickname : ");
+    QLineEdit* thisUserNickname = new QLineEdit;
+    QLabel* lblThisUserPassword = new QLabel("              My Password : ");
+    QLineEdit* thisUserPassword = new QLineEdit;
+    thisUserPassword->setEchoMode(QLineEdit::Password);
+    QLabel* lblUserDataSpacer = new QLabel("    ");
+    QPushButton* btnLogin = new QPushButton("LOGIN");
+    btnLogin->setMinimumSize(QSize(100,40));
+    btnLogin->setMaximumSize(QSize(100,40));
     //
     QLabel* lblRemotePeerIP = new QLabel("Peer IP : ");
     CustomIpEditor* myIpEdRemotePeerIP = new CustomIpEditor;
-    QLabel* lblRemotePeerPort = new QLabel("Peer Port : ");
+    QLabel* lblRemotePeerPort = new QLabel("                Peer Port : ");
     PortValidatorWidget* rmtPeerPort = new PortValidatorWidget;
+    QLabel* lblPeerDataSpacer = new QLabel("    ");
+    QPushButton* btnSendToPeerByIP = new QPushButton("Send");
+    btnSendToPeerByIP->setMinimumSize(QSize(100,40));
+    btnSendToPeerByIP->setMaximumSize(QSize(100,40));
+    //
+    QLabel* lblMessage = new QLabel("                       Message: ");
+    QLineEdit* lnedMessage = new QLineEdit;
+    lnedMessage->setMinimumSize(QSize(100, 30));
+    //QLabel* lblPeerName = new QLabel("Peer Name: ");
+    //QLineEdit* lnedPeerName = new QLineEdit;
+    QPushButton* btnSendToPeerByName = new QPushButton("Send");
+    btnSendToPeerByName->setMinimumSize(QSize(100,40));
+    btnSendToPeerByName->setMaximumSize(QSize(100,40));
+    //
+    QLabel* lblPeersNicknamesList = new QLabel("The List of Online Users: ");
+    QListWidget* lwListOfPeers = new QListWidget;
+    //QListWidget lwListOfPeers;
+    //QStringList slListOfPeers = new QStringList;
+    QListWidgetItem* lwListOfPeersItem = 0;
+    QStringList slListOfPeers;
+    //slListOfPeers << "Windows" << "Lunux" << "MacOS_X" ;
+    foreach(QString item, slListOfPeers) {
+        lwListOfPeersItem = new QListWidgetItem(item, lwListOfPeers);
+        //lwListOfPeersItem->setIcon
+    }
+    //
+    QLabel* lblLog = new QLabel("Log:");
+    QTextEdit* txtedLog = new QTextEdit;
+
     //
     pgrdLayout->addWidget(lblGroupIP, 0, 0);
     pgrdLayout->addWidget(myIpEdGroupIP, 0, 1);
@@ -57,10 +96,29 @@ MainWindow::MainWindow(QWidget *parent) :
     pgrdLayout->addWidget(lblThisHostUserPort, 1, 2);
     pgrdLayout->addWidget(thisUserPort, 1, 3);
     //
-    pgrdLayout->addWidget(lblRemotePeerIP, 2, 0);
-    pgrdLayout->addWidget(myIpEdRemotePeerIP, 2, 1);
-    pgrdLayout->addWidget(lblRemotePeerPort, 2, 2);
-    pgrdLayout->addWidget(rmtPeerPort, 2, 3);
+    pgrdLayout->addWidget(lblThisUserNickname, 2, 0);
+    pgrdLayout->addWidget(thisUserNickname, 2, 1);
+    pgrdLayout->addWidget(lblThisUserPassword, 2, 2);
+    pgrdLayout->addWidget(thisUserPassword, 2, 3);
+    pgrdLayout->addWidget(lblUserDataSpacer, 2, 4);
+    pgrdLayout->addWidget(btnLogin, 2, 5);
+    //
+    pgrdLayout->addWidget(lblRemotePeerIP, 3, 0);
+    pgrdLayout->addWidget(myIpEdRemotePeerIP, 3, 1);
+    pgrdLayout->addWidget(lblRemotePeerPort, 3, 2);
+    pgrdLayout->addWidget(rmtPeerPort, 3, 3);
+    pgrdLayout->addWidget(lblPeerDataSpacer, 3, 4);
+    pgrdLayout->addWidget(btnSendToPeerByIP, 3, 5);
+    //
+    pgrdLayout->addWidget(lblMessage, 4, 0);
+    //pgrdLayout->addWidget(lnedMessage, 4, 1, 1, 4, Qt:: AlignCenter);
+    pgrdLayout->addWidget(lnedMessage, 4, 1, 1, 5);
+    //
+    pgrdLayout->addWidget(lblPeersNicknamesList, 0, 6);
+    pgrdLayout->addWidget(lwListOfPeers, 1, 6, 6, 6);
+    //
+    pgrdLayout->addWidget(lblLog, 5, 0);
+    pgrdLayout->addWidget(txtedLog, 6, 0, 5, 6);
 
     centralWidget()->setLayout(pgrdLayout);
 

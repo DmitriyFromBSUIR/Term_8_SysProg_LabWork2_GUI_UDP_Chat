@@ -13,13 +13,27 @@ private:
     virtual void focusOutEvent(QFocusEvent *e) {
         if(isModified()) {
             this->clearFocus();
+            setReadOnly(true);
             emit textChanged();
             //return 1;
         }
-        this->clearFocus();
+
+        setReadOnly(true);
+        //this->clearFocus();
         //return 0;
     }
+/*
+    virtual void focusInEvent(QFocusEvent *e) {
 
+        setReadOnly(false);
+
+    }
+*/
+    virtual void mousePressEvent(QMouseEvent *e) {
+
+        setReadOnly(false);
+
+    }
 protected:
     virtual void mouseReleaseEvent(QMouseEvent *event) {
         QLineEdit::mouseReleaseEvent(event);
@@ -28,14 +42,13 @@ protected:
 public:
     //PortValidatorWidget( QWidget* parent = 0 ) : QWidget( parent ) {
     PortValidatorWidget( QWidget* parent = 0 ) : QLineEdit( parent ) {
-
-        _intPortEdit = new QLineEdit;
+        //setStyle(new QLineEditStyle(style()));
+        //_intPortEdit = new QLineEdit(this);
         // Валидатор целых чисел от 1024 до 49151
         setValidator( new QIntValidator( 1024, 49151 ) );
-        _intPortEdit->setStyleSheet("QFrame { background-color: white;  border: 1px solid white; border-radius: 15px; }");
+        setMinimumSize(QSize(60, 10));
+        setStyleSheet("QFrame { background-color: white;  border: 1px solid white; border-radius: 15px; }");
         connect( this, SIGNAL( textChanged() ), SLOT( onCheckUp() ) );
-        //connect( _intPortEdit, SIGNAL( textEdited() ), SLOT( onCheckUp() ) );
-        //connect( _intPortEdit, SIGNAL( selectionChanged() ), SLOT( onCheckUp() ) );
     }
 
 signals:
