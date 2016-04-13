@@ -41,6 +41,7 @@ Lab Work 2 - Qt GUI UDP Chat (Multicast data transfer mode)
   - Процент потери пакетов – 5%
   
 Расчет overhead будет производится за фиксированный промежуток времени по следующей формуле:
+
         O = (A size - M size ) / A size
 
 Где:
