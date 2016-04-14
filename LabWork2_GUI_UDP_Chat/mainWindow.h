@@ -8,6 +8,8 @@
 #include <IP_Validator.h>
 #include <portValidator.h>
 
+#include "Peers.hpp"
+
 /// Тип сообщения
 ///-->
 enum MessageType {
@@ -33,7 +35,7 @@ private:
     Ui::MainWindow *ui;
 
 public slots:
-    void messageTransfer(QLineEdit* lnedMessage);
+    void messageTransfer(Peer *peer, QLineEdit* lnedMessage);
 };
 
 

@@ -1,7 +1,7 @@
 #include "mainWindow.h"
 #include "ui_mainwindow.h"
 
-#include "Peers.hpp"
+//#include "Peers.hpp"
 
 /*
 MainWindow::MainWindow(QWidget *parent) :
@@ -21,8 +21,10 @@ void MainMenu(QMainWindow* mainWin) {
 
 }
 */
-void MainWindow::messageTransfer(QLineEdit* lnedMessage) {
-    string userMsg = lnedMessage->text();
+void MainWindow::messageTransfer(Peer* peer, QLineEdit* lnedMessage) {
+    QString msg = lnedMessage->text();
+    QByteArray bArr = msg.toLocal8Bit();
+    string userMsg = string(bArr.data(), bArr.size());
     peer->setCurrrentMessage(userMsg);
 }
 
@@ -71,7 +73,7 @@ MainWindow::MainWindow(int argc, QWidget *parent) :
     QPushButton* btnSendToPeerByIP = new QPushButton("Send");
     btnSendToPeerByIP->setMinimumSize(QSize(100,40));
     btnSendToPeerByIP->setMaximumSize(QSize(100,40));
-    QObject:: connect(btnSendToPeerByIP, SIGNAL(clicked()), SLOT(messageTransfer(QLineEdit* lnedMessage)));
+    QObject:: connect(btnSendToPeerByIP, SIGNAL(clicked()), SLOT(messageTransfer(Peer* peer, QLineEdit* lnedMessage)));
     //
     QLabel* lblMessage = new QLabel("                       Message: ");
     QLineEdit* lnedMessage = new QLineEdit;

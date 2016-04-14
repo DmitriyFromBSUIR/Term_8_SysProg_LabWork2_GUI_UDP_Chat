@@ -23,6 +23,14 @@ public:
         _mcUdpSock = new MulticastUDPsocket(multicastAddress, multicastPort);
     }
 
+    void setCurrrentMessage(string userMsg) {
+       _currentMessage = userMsg;
+    }
+
+    string getCurrrentMessage() {
+       return _currentMessage;
+    }
+
     ~Peer() { delete _privateComUdpSock; delete _mcUdpSock;}
 
     string inputMessage(){
