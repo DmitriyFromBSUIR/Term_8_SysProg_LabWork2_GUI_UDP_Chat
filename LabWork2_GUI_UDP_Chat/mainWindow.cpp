@@ -1,7 +1,7 @@
 #include "mainWindow.h"
 #include "ui_mainwindow.h"
 
-
+#include "Peers.hpp"
 
 /*
 MainWindow::MainWindow(QWidget *parent) :
@@ -21,13 +21,24 @@ void MainMenu(QMainWindow* mainWin) {
 
 }
 */
-MainWindow::MainWindow(QWidget *parent) :
+void MainWindow::messageTransfer(QLineEdit* lnedMessage) {
+    string userMsg = lnedMessage->text();
+    peer->setCurrrentMessage(userMsg);
+}
+
+MainWindow::MainWindow(int argc, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
     //MainMenu();
+
+    Peer* peer;
+    if(argc == 3)
+        peer = new Peer("192.168.0.12", "37000");
+    else
+        peer = new Peer("192.168.0.12", "38000");
 
     //
     QGridLayout* pgrdLayout = new QGridLayout;
@@ -60,6 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QPushButton* btnSendToPeerByIP = new QPushButton("Send");
     btnSendToPeerByIP->setMinimumSize(QSize(100,40));
     btnSendToPeerByIP->setMaximumSize(QSize(100,40));
+    QObject:: connect(btnSendToPeerByIP, SIGNAL(clicked()), SLOT(messageTransfer(QLineEdit* lnedMessage)));
     //
     QLabel* lblMessage = new QLabel("                       Message: ");
     QLineEdit* lnedMessage = new QLineEdit;
@@ -119,6 +131,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //
     pgrdLayout->addWidget(lblLog, 5, 0);
     pgrdLayout->addWidget(txtedLog, 6, 0, 5, 6);
+
 
     centralWidget()->setLayout(pgrdLayout);
 

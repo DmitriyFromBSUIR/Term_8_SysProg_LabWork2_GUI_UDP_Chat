@@ -14,8 +14,8 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -m32 -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -m32 -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../LabWork2_GUI_UDP_Chat -I. -I/opt/Qt_v.5.5.1/5.5/gcc/include -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore -I. -I. -I/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/linux-g++-32
+CXXFLAGS      = -m32 -pipe -g -std=c++1y -std=c++1y -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+INCPATH       = -I../LabWork2_GUI_UDP_Chat -I. -I/usr/local/include/boost -I/opt/Qt_v.5.5.1/5.5/gcc/include -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore -I. -I. -I/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/linux-g++-32
 QMAKE         = /opt/Qt_v.5.5.1/5.5/gcc/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = LabWork2_GUI_UDP_Chat1.0.0
 DISTDIR = /home/dmitry/Projects/Qt_Workspace/Term_8_SysProg_LabWork2_GUI_UDP_Chat/build-LabWork2_GUI_UDP_Chat-Desktop_Qt_5_5_1_GCC_32bit-Debug/.tmp/LabWork2_GUI_UDP_Chat1.0.0
 LINK          = g++
 LFLAGS        = -m32 -Wl,-rpath,/opt/Qt_v.5.5.1/5.5/gcc -Wl,-rpath,/opt/Qt_v.5.5.1/5.5/gcc/lib
-LIBS          = $(SUBLIBS) -L/opt/Qt_v.5.5.1/5.5/gcc/lib -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/local/lib/ -lboost_system -lboost_regex -lboost_thread -lboost_exception -lboost_log -L/opt/Qt_v.5.5.1/5.5/gcc/lib -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -180,6 +180,8 @@ DIST          = /opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/spec_pre.prf \
 		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/default_pre.prf \
 		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/resolve_config.prf \
 		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/default_post.prf \
+		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/c++11.prf \
+		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/c++14.prf \
 		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/warn_on.prf \
 		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/qt.prf \
 		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/resources.prf \
@@ -194,7 +196,12 @@ DIST          = /opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/spec_pre.prf \
 		../LabWork2_GUI_UDP_Chat/LabWork2_GUI_UDP_Chat.pro ../LabWork2_GUI_UDP_Chat/mainWindow.h \
 		../LabWork2_GUI_UDP_Chat/portValidator.h \
 		../LabWork2_GUI_UDP_Chat/IP_Validator.h \
-		../LabWork2_GUI_UDP_Chat/Libs.h ../LabWork2_GUI_UDP_Chat/main.cpp \
+		../LabWork2_GUI_UDP_Chat/Libs.h \
+		../LabWork2_GUI_UDP_Chat/IncludedLibs.h \
+		../LabWork2_GUI_UDP_Chat/multicastUDPsocket.hpp \
+		../LabWork2_GUI_UDP_Chat/Peers.hpp \
+		../LabWork2_GUI_UDP_Chat/udpSocket.hpp \
+		../LabWork2_GUI_UDP_Chat/UsefulDataPacket.hpp ../LabWork2_GUI_UDP_Chat/main.cpp \
 		../LabWork2_GUI_UDP_Chat/mainWindow.cpp
 QMAKE_TARGET  = LabWork2_GUI_UDP_Chat
 DESTDIR       = #avoid trailing-slash linebreak
@@ -349,6 +356,8 @@ Makefile: ../LabWork2_GUI_UDP_Chat/LabWork2_GUI_UDP_Chat.pro /opt/Qt_v.5.5.1/5.5
 		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/default_pre.prf \
 		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/resolve_config.prf \
 		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/default_post.prf \
+		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/c++11.prf \
+		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/c++14.prf \
 		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/warn_on.prf \
 		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/qt.prf \
 		/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/resources.prf \
@@ -488,6 +497,8 @@ Makefile: ../LabWork2_GUI_UDP_Chat/LabWork2_GUI_UDP_Chat.pro /opt/Qt_v.5.5.1/5.5
 /opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/default_pre.prf:
 /opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/resolve_config.prf:
 /opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/default_post.prf:
+/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/c++11.prf:
+/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/c++14.prf:
 /opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/warn_on.prf:
 /opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/qt.prf:
 /opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/resources.prf:
@@ -517,7 +528,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../LabWork2_GUI_UDP_Chat/mainWindow.h ../LabWork2_GUI_UDP_Chat/portValidator.h ../LabWork2_GUI_UDP_Chat/IP_Validator.h ../LabWork2_GUI_UDP_Chat/Libs.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../LabWork2_GUI_UDP_Chat/mainWindow.h ../LabWork2_GUI_UDP_Chat/portValidator.h ../LabWork2_GUI_UDP_Chat/IP_Validator.h ../LabWork2_GUI_UDP_Chat/Libs.h ../LabWork2_GUI_UDP_Chat/IncludedLibs.h ../LabWork2_GUI_UDP_Chat/multicastUDPsocket.hpp ../LabWork2_GUI_UDP_Chat/Peers.hpp ../LabWork2_GUI_UDP_Chat/udpSocket.hpp ../LabWork2_GUI_UDP_Chat/UsefulDataPacket.hpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../LabWork2_GUI_UDP_Chat/main.cpp ../LabWork2_GUI_UDP_Chat/mainWindow.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../LabWork2_GUI_UDP_Chat/mainWindow.ui $(DISTDIR)/
 
@@ -671,6 +682,24 @@ moc_mainWindow.cpp: /opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QMainWindow \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextformat.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qpen.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextoption.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QTextEdit \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qtextedit.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractscrollarea.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextdocument.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QListWidget \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qlistwidget.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qlistview.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractitemview.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qabstractitemmodel.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qitemselectionmodel.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractitemdelegate.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qstyleoption.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractspinbox.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qslider.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractslider.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qstyle.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qtabbar.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qrubberband.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QFrame \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QPushButton \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qpushbutton.h \
@@ -679,10 +708,11 @@ moc_mainWindow.cpp: /opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QMainWindow \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qprogressbar.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/QKeyEvent \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/QDebug \
+		../LabWork2_GUI_UDP_Chat/IncludedLibs.h \
 		../LabWork2_GUI_UDP_Chat/IP_Validator.h \
 		../LabWork2_GUI_UDP_Chat/portValidator.h \
 		../LabWork2_GUI_UDP_Chat/mainWindow.h
-	/opt/Qt_v.5.5.1/5.5/gcc/bin/moc $(DEFINES) -I/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/linux-g++-32 -I/home/dmitry/Projects/Qt_Workspace/Term_8_SysProg_LabWork2_GUI_UDP_Chat/LabWork2_GUI_UDP_Chat -I/opt/Qt_v.5.5.1/5.5/gcc/include -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore -I. ../LabWork2_GUI_UDP_Chat/mainWindow.h -o moc_mainWindow.cpp
+	/opt/Qt_v.5.5.1/5.5/gcc/bin/moc $(DEFINES) -I/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/linux-g++-32 -I/home/dmitry/Projects/Qt_Workspace/Term_8_SysProg_LabWork2_GUI_UDP_Chat/LabWork2_GUI_UDP_Chat -I/usr/local/include/boost -I/opt/Qt_v.5.5.1/5.5/gcc/include -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore -I. ../LabWork2_GUI_UDP_Chat/mainWindow.h -o moc_mainWindow.cpp
 
 moc_portValidator.cpp: ../LabWork2_GUI_UDP_Chat/Libs.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QLayout \
@@ -806,17 +836,37 @@ moc_portValidator.cpp: ../LabWork2_GUI_UDP_Chat/Libs.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextformat.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qpen.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextoption.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QTextEdit \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qtextedit.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractscrollarea.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextdocument.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QListWidget \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qlistwidget.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qlistview.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractitemview.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qabstractitemmodel.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qitemselectionmodel.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractitemdelegate.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qstyleoption.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractspinbox.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qicon.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qslider.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractslider.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qstyle.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qtabbar.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qtabwidget.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qrubberband.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QFrame \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QPushButton \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qpushbutton.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractbutton.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qicon.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QProgressBar \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qprogressbar.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/QKeyEvent \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/QDebug \
+		../LabWork2_GUI_UDP_Chat/IncludedLibs.h \
 		../LabWork2_GUI_UDP_Chat/portValidator.h
-	/opt/Qt_v.5.5.1/5.5/gcc/bin/moc $(DEFINES) -I/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/linux-g++-32 -I/home/dmitry/Projects/Qt_Workspace/Term_8_SysProg_LabWork2_GUI_UDP_Chat/LabWork2_GUI_UDP_Chat -I/opt/Qt_v.5.5.1/5.5/gcc/include -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore -I. ../LabWork2_GUI_UDP_Chat/portValidator.h -o moc_portValidator.cpp
+	/opt/Qt_v.5.5.1/5.5/gcc/bin/moc $(DEFINES) -I/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/linux-g++-32 -I/home/dmitry/Projects/Qt_Workspace/Term_8_SysProg_LabWork2_GUI_UDP_Chat/LabWork2_GUI_UDP_Chat -I/usr/local/include/boost -I/opt/Qt_v.5.5.1/5.5/gcc/include -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore -I. ../LabWork2_GUI_UDP_Chat/portValidator.h -o moc_portValidator.cpp
 
 moc_IP_Validator.cpp: ../LabWork2_GUI_UDP_Chat/Libs.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QLayout \
@@ -940,17 +990,37 @@ moc_IP_Validator.cpp: ../LabWork2_GUI_UDP_Chat/Libs.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextformat.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qpen.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextoption.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QTextEdit \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qtextedit.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractscrollarea.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextdocument.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QListWidget \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qlistwidget.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qlistview.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractitemview.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qabstractitemmodel.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qitemselectionmodel.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractitemdelegate.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qstyleoption.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractspinbox.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qicon.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qslider.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractslider.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qstyle.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qtabbar.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qtabwidget.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qrubberband.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QFrame \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QPushButton \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qpushbutton.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractbutton.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qicon.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QProgressBar \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qprogressbar.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/QKeyEvent \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/QDebug \
+		../LabWork2_GUI_UDP_Chat/IncludedLibs.h \
 		../LabWork2_GUI_UDP_Chat/IP_Validator.h
-	/opt/Qt_v.5.5.1/5.5/gcc/bin/moc $(DEFINES) -I/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/linux-g++-32 -I/home/dmitry/Projects/Qt_Workspace/Term_8_SysProg_LabWork2_GUI_UDP_Chat/LabWork2_GUI_UDP_Chat -I/opt/Qt_v.5.5.1/5.5/gcc/include -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore -I. ../LabWork2_GUI_UDP_Chat/IP_Validator.h -o moc_IP_Validator.cpp
+	/opt/Qt_v.5.5.1/5.5/gcc/bin/moc $(DEFINES) -I/opt/Qt_v.5.5.1/5.5/gcc/mkspecs/linux-g++-32 -I/home/dmitry/Projects/Qt_Workspace/Term_8_SysProg_LabWork2_GUI_UDP_Chat/LabWork2_GUI_UDP_Chat -I/usr/local/include/boost -I/opt/Qt_v.5.5.1/5.5/gcc/include -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui -I/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore -I. ../LabWork2_GUI_UDP_Chat/IP_Validator.h -o moc_IP_Validator.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1097,6 +1167,24 @@ main.o: ../LabWork2_GUI_UDP_Chat/main.cpp ../LabWork2_GUI_UDP_Chat/mainWindow.h 
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextformat.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qpen.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextoption.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QTextEdit \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qtextedit.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractscrollarea.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextdocument.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QListWidget \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qlistwidget.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qlistview.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractitemview.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qabstractitemmodel.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qitemselectionmodel.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractitemdelegate.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qstyleoption.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractspinbox.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qslider.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractslider.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qstyle.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qtabbar.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qrubberband.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QFrame \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QPushButton \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qpushbutton.h \
@@ -1105,6 +1193,7 @@ main.o: ../LabWork2_GUI_UDP_Chat/main.cpp ../LabWork2_GUI_UDP_Chat/mainWindow.h 
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qprogressbar.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/QKeyEvent \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/QDebug \
+		../LabWork2_GUI_UDP_Chat/IncludedLibs.h \
 		../LabWork2_GUI_UDP_Chat/IP_Validator.h \
 		../LabWork2_GUI_UDP_Chat/portValidator.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QApplication \
@@ -1243,6 +1332,24 @@ mainWindow.o: ../LabWork2_GUI_UDP_Chat/mainWindow.cpp ../LabWork2_GUI_UDP_Chat/m
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextformat.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qpen.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextoption.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QTextEdit \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qtextedit.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractscrollarea.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/qtextdocument.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QListWidget \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qlistwidget.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qlistview.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractitemview.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qabstractitemmodel.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qitemselectionmodel.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractitemdelegate.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qstyleoption.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractspinbox.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qslider.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractslider.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qstyle.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qtabbar.h \
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qrubberband.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QFrame \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QPushButton \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qpushbutton.h \
@@ -1251,6 +1358,7 @@ mainWindow.o: ../LabWork2_GUI_UDP_Chat/mainWindow.cpp ../LabWork2_GUI_UDP_Chat/m
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qprogressbar.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtGui/QKeyEvent \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/QDebug \
+		../LabWork2_GUI_UDP_Chat/IncludedLibs.h \
 		../LabWork2_GUI_UDP_Chat/IP_Validator.h \
 		../LabWork2_GUI_UDP_Chat/portValidator.h \
 		ui_mainwindow.h \
@@ -1269,18 +1377,6 @@ mainWindow.o: ../LabWork2_GUI_UDP_Chat/mainWindow.cpp ../LabWork2_GUI_UDP_Chat/m
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qbuttongroup.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QHeaderView \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qheaderview.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractitemview.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractscrollarea.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qabstractitemmodel.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qitemselectionmodel.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractitemdelegate.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qstyleoption.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractspinbox.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qslider.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qabstractslider.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qstyle.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qtabbar.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qrubberband.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QMenuBar \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qmenubar.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qmenu.h \
@@ -1288,7 +1384,11 @@ mainWindow.o: ../LabWork2_GUI_UDP_Chat/mainWindow.cpp ../LabWork2_GUI_UDP_Chat/m
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qstatusbar.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QToolBar \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/qtoolbar.h \
-		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QWidget
+		/opt/Qt_v.5.5.1/5.5/gcc/include/QtWidgets/QWidget \
+		../LabWork2_GUI_UDP_Chat/Peers.hpp \
+		../LabWork2_GUI_UDP_Chat/udpSocket.hpp \
+		../LabWork2_GUI_UDP_Chat/multicastUDPsocket.hpp \
+		../LabWork2_GUI_UDP_Chat/UsefulDataPacket.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainWindow.o ../LabWork2_GUI_UDP_Chat/mainWindow.cpp
 
 moc_mainWindow.o: moc_mainWindow.cpp 

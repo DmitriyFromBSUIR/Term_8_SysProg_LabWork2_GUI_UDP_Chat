@@ -16,5 +16,7 @@
 #include <QKeyEvent>
 #include <QDebug>
 
+#include "IncludedLibs.h"
+
 #endif // __LIBS_H__
 
