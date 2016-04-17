@@ -32,10 +32,16 @@ public:
     ~MainWindow();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow* ui;
+    Peer* _peer;
+    QGridLayout* _pgrdLayout;
+    QLineEdit* _lnedMessage;
+
+    void messageTransfer();
 
 public slots:
-    void messageTransfer(Peer *peer, QLineEdit* lnedMessage);
+    void clickedSlot();
+
 };
 
 

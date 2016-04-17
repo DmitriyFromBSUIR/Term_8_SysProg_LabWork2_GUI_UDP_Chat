@@ -21,11 +21,16 @@ void MainMenu(QMainWindow* mainWin) {
 
 }
 */
-void MainWindow::messageTransfer(Peer* peer, QLineEdit* lnedMessage) {
-    QString msg = lnedMessage->text();
+
+void MainWindow:: messageTransfer() {
+    QString msg = _lnedMessage->text();
     QByteArray bArr = msg.toLocal8Bit();
     string userMsg = string(bArr.data(), bArr.size());
-    peer->setCurrrentMessage(userMsg);
+    _peer->setCurrrentMessage(userMsg);
+}
+
+void MainWindow:: clickedSlot(){
+    messageTransfer();
 }
 
 MainWindow::MainWindow(int argc, QWidget *parent) :
@@ -36,14 +41,13 @@ MainWindow::MainWindow(int argc, QWidget *parent) :
 
     //MainMenu();
 
-    Peer* peer;
     if(argc == 3)
-        peer = new Peer("192.168.0.12", "37000");
+        _peer = new Peer("192.168.0.12", "37000");
     else
-        peer = new Peer("192.168.0.12", "38000");
+        _peer = new Peer("192.168.0.12", "38000");
 
     //
-    QGridLayout* pgrdLayout = new QGridLayout;
+    _pgrdLayout = new QGridLayout;
     //
     QLabel* lblGroupIP = new QLabel("Multicast IP (Group: All-Hosts) : ");
     CustomIpEditor* myIpEdGroupIP = new CustomIpEditor;
@@ -73,16 +77,18 @@ MainWindow::MainWindow(int argc, QWidget *parent) :
     QPushButton* btnSendToPeerByIP = new QPushButton("Send");
     btnSendToPeerByIP->setMinimumSize(QSize(100,40));
     btnSendToPeerByIP->setMaximumSize(QSize(100,40));
-    QObject:: connect(btnSendToPeerByIP, SIGNAL(clicked()), SLOT(messageTransfer(Peer* peer, QLineEdit* lnedMessage)));
     //
     QLabel* lblMessage = new QLabel("                       Message: ");
-    QLineEdit* lnedMessage = new QLineEdit;
-    lnedMessage->setMinimumSize(QSize(100, 30));
+    _lnedMessage = new QLineEdit;
+    _lnedMessage->setMinimumSize(QSize(100, 30));
     //QLabel* lblPeerName = new QLabel("Peer Name: ");
     //QLineEdit* lnedPeerName = new QLineEdit;
     QPushButton* btnSendToPeerByName = new QPushButton("Send");
+    //btnSendToPeerByName->setText("Send");
     btnSendToPeerByName->setMinimumSize(QSize(100,40));
     btnSendToPeerByName->setMaximumSize(QSize(100,40));
+    //
+    QObject:: connect(btnSendToPeerByIP, SIGNAL(clicked()), this, SLOT(clickedSlot()));
     //
     QLabel* lblPeersNicknamesList = new QLabel("The List of Online Users: ");
     QListWidget* lwListOfPeers = new QListWidget;
@@ -100,42 +106,42 @@ MainWindow::MainWindow(int argc, QWidget *parent) :
     QTextEdit* txtedLog = new QTextEdit;
 
     //
-    pgrdLayout->addWidget(lblGroupIP, 0, 0);
-    pgrdLayout->addWidget(myIpEdGroupIP, 0, 1);
-    pgrdLayout->addWidget(lblGroupPort, 0, 2);
-    pgrdLayout->addWidget(grpPort, 0, 3);
+    _pgrdLayout->addWidget(lblGroupIP, 0, 0);
+    _pgrdLayout->addWidget(myIpEdGroupIP, 0, 1);
+    _pgrdLayout->addWidget(lblGroupPort, 0, 2);
+    _pgrdLayout->addWidget(grpPort, 0, 3);
     //
-    pgrdLayout->addWidget(lblThisHostUserIP, 1, 0);
-    pgrdLayout->addWidget(myIpEdThisHostUserIP, 1, 1);
-    pgrdLayout->addWidget(lblThisHostUserPort, 1, 2);
-    pgrdLayout->addWidget(thisUserPort, 1, 3);
+    _pgrdLayout->addWidget(lblThisHostUserIP, 1, 0);
+    _pgrdLayout->addWidget(myIpEdThisHostUserIP, 1, 1);
+    _pgrdLayout->addWidget(lblThisHostUserPort, 1, 2);
+    _pgrdLayout->addWidget(thisUserPort, 1, 3);
     //
-    pgrdLayout->addWidget(lblThisUserNickname, 2, 0);
-    pgrdLayout->addWidget(thisUserNickname, 2, 1);
-    pgrdLayout->addWidget(lblThisUserPassword, 2, 2);
-    pgrdLayout->addWidget(thisUserPassword, 2, 3);
-    pgrdLayout->addWidget(lblUserDataSpacer, 2, 4);
-    pgrdLayout->addWidget(btnLogin, 2, 5);
+    _pgrdLayout->addWidget(lblThisUserNickname, 2, 0);
+    _pgrdLayout->addWidget(thisUserNickname, 2, 1);
+    _pgrdLayout->addWidget(lblThisUserPassword, 2, 2);
+    _pgrdLayout->addWidget(thisUserPassword, 2, 3);
+    _pgrdLayout->addWidget(lblUserDataSpacer, 2, 4);
+    _pgrdLayout->addWidget(btnLogin, 2, 5);
     //
-    pgrdLayout->addWidget(lblRemotePeerIP, 3, 0);
-    pgrdLayout->addWidget(myIpEdRemotePeerIP, 3, 1);
-    pgrdLayout->addWidget(lblRemotePeerPort, 3, 2);
-    pgrdLayout->addWidget(rmtPeerPort, 3, 3);
-    pgrdLayout->addWidget(lblPeerDataSpacer, 3, 4);
-    pgrdLayout->addWidget(btnSendToPeerByIP, 3, 5);
+    _pgrdLayout->addWidget(lblRemotePeerIP, 3, 0);
+    _pgrdLayout->addWidget(myIpEdRemotePeerIP, 3, 1);
+    _pgrdLayout->addWidget(lblRemotePeerPort, 3, 2);
+    _pgrdLayout->addWidget(rmtPeerPort, 3, 3);
+    _pgrdLayout->addWidget(lblPeerDataSpacer, 3, 4);
+    _pgrdLayout->addWidget(btnSendToPeerByIP, 3, 5);
     //
-    pgrdLayout->addWidget(lblMessage, 4, 0);
+    _pgrdLayout->addWidget(lblMessage, 4, 0);
     //pgrdLayout->addWidget(lnedMessage, 4, 1, 1, 4, Qt:: AlignCenter);
-    pgrdLayout->addWidget(lnedMessage, 4, 1, 1, 5);
+    _pgrdLayout->addWidget(_lnedMessage, 4, 1, 1, 5);
     //
-    pgrdLayout->addWidget(lblPeersNicknamesList, 0, 6);
-    pgrdLayout->addWidget(lwListOfPeers, 1, 6, 6, 6);
+    _pgrdLayout->addWidget(lblPeersNicknamesList, 0, 6);
+    _pgrdLayout->addWidget(lwListOfPeers, 1, 6, 8, 6);
     //
-    pgrdLayout->addWidget(lblLog, 5, 0);
-    pgrdLayout->addWidget(txtedLog, 6, 0, 5, 6);
+    _pgrdLayout->addWidget(lblLog, 5, 0);
+    _pgrdLayout->addWidget(txtedLog, 6, 0, 5, 6);
 
 
-    centralWidget()->setLayout(pgrdLayout);
+    centralWidget()->setLayout(_pgrdLayout);
 
     //centralWidget()->layout()->addWidget(myEditor);
 }
