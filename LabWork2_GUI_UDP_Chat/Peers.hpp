@@ -8,6 +8,8 @@
 class Peer
 {
 private:
+    string _peerIP;
+    string _peerPort;
     UDP_Socket* _privateComUdpSock;
     MulticastUDPsocket* _mcUdpSock;
     string _currentMessage;
@@ -17,10 +19,28 @@ private:
 public:
     //Peer(string IP, unsigned int port, string multicastAddress = MulticastAddress, unsigned int multicastPort = multicastPORT) {
     Peer(string IP, string port, string multicastAddress = "224.0.0.1", string multicastPort = "28000") {
+        _peerIP = IP;
+        _peerPort = port;
         _privateComUdpSock = new UDP_Socket(IP, port);
         //_mcUdpSock = new MulticastUDPsocket(MulticastAddress, "28000");
         //_mcUdpSock = new MulticastUDPsocket(multicastAddress, multicastPort);
         _mcUdpSock = new MulticastUDPsocket(multicastAddress, multicastPort);
+    }
+
+    string getPeerIP() {
+        return _peerIP;
+    }
+
+    void setPeerIP(string peerIP) {
+        _peerIP = peerIP;
+    }
+
+    string getPeerPort() {
+        return _peerPort;
+    }
+
+    void setPeerPort(string peerPort) {
+        _peerPort = peerPort;
     }
 
     void setCurrrentMessage(string userMsg) {
@@ -91,10 +111,12 @@ public:
         FD_SET(_privateComUdpSock->getSocket(), &readset);
         FD_SET(_mcUdpSock->getSocket(), &readset);
         int retVal = 0;
+        SOCKET privateSFD_handle = _privateComUdpSock->getSocket();
+        SOCKET multicastSFD_handle = _mcUdpSock->getSocket();
 
         while(true) {
 
-            retVal = ::select(2 + 1,	//Ignored. The nfds parameter is included only for compatibility with Berkeley sockets.
+            retVal = ::select(multicastSFD_handle + 1,	//Ignored. The nfds parameter is included only for compatibility with Berkeley sockets.
                 &readset,//An optional pointer to a set of sockets to be checked for readability.
                 NULL,//An optional pointer to a set of sockets to be checked for writability.
                 NULL,//An optional pointer to a set of sockets to be checked for errors.
@@ -102,17 +124,18 @@ public:
                 );
             if(retVal <= 0) { //if timed out for select
                 cout << endl << "[DEBUG]: timed out for receivng message" << endl;
-                string message = userInputMessage();
-                usefulDataPacket buffer(message);
+                //string message = userInputMessage();
+                //usefulDataPacket buffer(message);
+                usefulDataPacket buffer(_currentMessage);
 
                 //MulticastUDPsocket mUdpSock(MulticastAddress, "28000");
-                _mcUdpSock->Send<usefulDataPacket>(MulticastAddress, 28000, buffer);
-
-                //UDP_Socket udpSock("192.168.0.12", "37000");
-                //UDP_Socket udpSock("127.0.0.1", "37000");
+                if(_currentMessage != "")
+                    _mcUdpSock->Send<usefulDataPacket>(MulticastAddress, 28000, buffer);
+                //else
+                    //
 
                 //bool funcResult = udpSock.Send<usefulDataPacket>("192.168.0.12", 38000, buffer);
-                bool funcResult = _privateComUdpSock->Send<usefulDataPacket>("127.0.0.1", 38000, buffer);
+                //bool funcResult = _privateComUdpSock->Send<usefulDataPacket>("192.168.0.12", 38000, buffer);
             }
             else if(retVal > 0){
                 if(FD_ISSET(_privateComUdpSock->getSocket(), &readset)) // if private socket
@@ -127,7 +150,7 @@ public:
                     //UDP_Socket udpSock("192.168.0.12", PORT);
                     //UDP_Socket udpSock("127.0.0.1", PORT);
                     //bool funcResult = udpSock.Receive<usefulDataPacket>("192.168.0.12", 37000, buffer);
-                    bool funcResult = _privateComUdpSock->Receive<usefulDataPacket>("127.0.0.1", 37000, buffer);
+                    bool funcResult = _privateComUdpSock->Receive<usefulDataPacket>("192.168.0.12", 37000, buffer);
                 }
                 if(FD_ISSET(_mcUdpSock->getSocket(), &readset)) // if multicast socket
                 {
@@ -143,11 +166,14 @@ public:
                 }
             }
         }
+
     }
+
+
 
     void run()
     {
-        cout << "Peer is running" << endl;
+        cout << endl << endl << "Peer is running" << endl;
         while(true) {
             Select(10);
         }

@@ -31,6 +31,7 @@ void MainWindow:: messageTransfer() {
 
 void MainWindow:: clickedSlot(){
     messageTransfer();
+    _peer->run();
 }
 
 MainWindow::MainWindow(int argc, QWidget *parent) :
@@ -41,7 +42,7 @@ MainWindow::MainWindow(int argc, QWidget *parent) :
 
     //MainMenu();
 
-    if(argc == 3)
+    if(argc == 2)
         _peer = new Peer("192.168.0.12", "37000");
     else
         _peer = new Peer("192.168.0.12", "38000");
